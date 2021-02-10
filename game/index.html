@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script src="script.js" defer></script>
+    <title>Guess the Number</title>
+    <style>
+      body {
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #buttons-container button {
+        height: 3em;
+        width: 3em;
+        border-radius: 5px;
+        background-color: lightskyblue;
+      }
+
+      #buttons-container button:hover {
+        background-color: rgb(80, 183, 247);
+      }
+      #btn-play {
+        height: 5em;
+        width: 5em;
+      }
+
+      .game-start {
+        background-color: lightgreen;
+        font-size: 2em;
+      }
+      .game-active {
+        background-color: lightgray;
+        font-size: 2em;
+        cursor: default;
+      }
+
+      .game-start:hover {
+        background-color: rgb(80, 228, 80);
+      }
+
+      .was-selected {
+        cursor: default;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      #output {
+        font-size: 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Guess the Number</h1>
+    <div id="display-container">
+      <button id="btn-play" class="game-start">Play!</button>
+      <p id="output-message"></p>
+    </div>
+    <div id="buttons-container" class="hidden">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button>10</button>
+    </div>
+    <div>
+      <p id="output"></p>
+      <button id="play-again" class="game-start hidden">Play Again!</button>
+    </div>
+  </body>
+</html>
