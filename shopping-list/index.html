@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vue.js Shopping List</title>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="script.js" defer></script>
+
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Shopping List</h1>
+    <div id="app" v-cloak>
+      <label>Item: </label>
+      <input v-model="currentItem" type="text" />
+      <button v-on:click="addItem()">Add</button>
+      <p v-if="items.length < 1"><i>You have no items in your list.</i></p>
+      <div v-if="items.length > 0">
+        <p>Item count: {{items.length}}</p>
+        <ul>
+          <li v-for="item in items">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
