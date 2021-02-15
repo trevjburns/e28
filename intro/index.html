@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vue.js Intro</title>
+    <meta charset="utf-8" />
+    <link href="data:," rel="icon" />
+
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="script.js" defer></script>
+
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Vue.js Intro</h1>
+
+    <div id="app" v-cloak>
+      <div v-if="!gameActive">
+        <label>What is your name? </label>
+        <input v-model="playerName" type="text" />
+        <button v-on:click="startGame()">Start Game</button>
+      </div>
+      <div v-if='gameActive'>
+        <p>Player name: {{ playerName }}</p>
+        <br />
+        <p>
+          I'm thinking of a number between 1 and 10. <br />What do you think it
+          is?<br />
+          <input type="text" v-model="guess" />
+          <button v-on:click="addGuess()">Submit guess</button>
+        </p>
+
+        <ul>
+          <li v-for="thisGuess in guesses">{{ thisGuess }}</li>
+        </ul>
+        <p v-if="correct">You guessed the mystery number!</p>
+        <button v-on:click="restartGame()">Restart Game</button>
+      </div>
+    </div>
+  </body>
+</html>
