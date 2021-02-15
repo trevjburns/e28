@@ -1,2 +1,2 @@
-# eX
-This is a template repository you’ll use for your course work.
+# e28 - Single-Page Applications & Interfaces with Vue.js
+Coursework repository
