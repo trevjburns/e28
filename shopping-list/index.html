@@ -10,19 +10,27 @@
       [v-cloak] {
         display: none;
       }
+      
+      .input-small {
+        width: 2em;
+        margin-right: 1em;
+      }
+      
     </style>
   </head>
   <body>
     <h1>Shopping List</h1>
     <div id="app" v-cloak>
+      <label>Qty: </label>
+      <input class="input-small" v-model="currentItem.qty" type="number" min="0" />
       <label>Item: </label>
-      <input v-model="currentItem" type="text" />
-      <button v-on:click="addItem()">Add</button>
+      <input v-model="currentItem.item" type="text" v-on:keyup.enter="addItem"/>
+      <button v-on:click="addItem">Add</button>
       <p v-if="items.length < 1"><i>You have no items in your list.</i></p>
       <div v-if="items.length > 0">
         <p>Item count: {{items.length}}</p>
         <ul>
-          <li v-for="item in items">{{item}}</li>
+          <li v-for="(item, index) in items"><button v-on:click="removeItem(index)">X</button> {{item.qty}} x {{item.item}}</li>
         </ul>
       </div>
     </div>

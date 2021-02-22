@@ -2,13 +2,21 @@ const ShoppingList = {
     data() {
         return {
             items: [],
-            currentItem: null,
+            currentItem: {
+                item: null,
+                qty: null
+            },
         }
     },
     methods: {
         addItem() {
-            this.items.push(this.currentItem);
+            this.items.push({item: this.currentItem.item, qty: this.currentItem.qty});
+            this.currentItem.item = null;
+            this.currentItem.qty = null;
         },
+        removeItem(index) {
+            this.items.splice(index, 1);
+        }
 
     }
 }
