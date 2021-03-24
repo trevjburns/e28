@@ -1,22 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Project 1</title>
+    <title>Project 1 - Guess the Number</title>
     <meta charset="utf-8" />
-    <link href="data:," rel="icon" />
 
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="script.js" defer></script>
+
+    <script id='guess-button' type='text/x-template'>
+      <button
+        v-bind:class="{ 'was-selected': wasSelected }"
+        v-on:click='$emit("select-number", number)'
+        v-bind:disabled="wasSelected"
+        >
+        {{ number }}
+      </button>
+    </script>
+
+    <script id='play-history-item' type='text/x-template'>
+      <li class='history-item'><em>Attempt {{ attemptNumber }}</em>: Player won in <b>{{ timesGuessed }}</b> guess(es)</li>
+    </script>
 
     <style>
       [v-cloak] {
         display: none;
       }
+
+      body {
+        margin: 0 auto;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      ul {
+        list-style-type: none;
+      }
+
+      #buttons-container button {
+        height: 3em;
+        width: 3em;
+        border-radius: 5px;
+        background-color: lightskyblue;
+        margin: 5px;
+      }
+
+      #buttons-container button:hover {
+        background-color: rgb(80, 183, 247);
+      }
+
+      .game-start {
+        background-color: lightgreen;
+        font-size: 2em;
+        height: 5em;
+        width: 5em;
+        border-radius: 5px;
+        border: 1px solid lightslategray;
+      }
+
+      .game-active {
+        background-color: lightgray;
+        font-size: 2em;
+        cursor: default;
+      }
+
+      .game-start:hover {
+        background-color: rgb(80, 228, 80);
+      }
+
+      .game-active:hover {
+        background-color: lightgray;
+      }
+
+      .was-selected {
+        cursor: default;
+      }
+
+      #buttons-container .was-selected:hover {
+        background-color: lightskyblue;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .output-text {
+        font-size: 1.5em;
+      }
+
+      #display-container {
+        margin-top: 5em;
+        margin-bottom: 2.5em;
+      }
+
+      #history {
+        width: 25%;
+        position: absolute;
+        right: -17px;
+        bottom: 5px;
+        border-radius: 5px;
+        background: lightpink;
+        overflow-x: hidden;
+      }
+
+      #history hr {
+        width: 75%;
+        background-color: black;
+        border: none;
+        height: 1px;
+      }
+
+      #log-content {
+        height: 20em;
+        overflow-y: scroll;
+        padding-right: 17px;
+      }
+
+      .history-item {
+        padding: 3px;
+      }
+
+      .box-shadow {
+        -webkit-box-shadow: 0px 5px 22px -6px #000000; 
+        box-shadow: 0px 5px 22px -6px #000000;
+      }
+
+      .play-again {
+        font-size: 1.25em;
+        height: 3em;
+        width: 5em;
+        border-radius: 5px;
+        border: 1px solid lightslategray;
+        background-color: lightgreen
+      }
+
+      .btn-clear-log {
+        margin-bottom: 5px;
+        height: 2em;
+        width: 10em;
+        border-radius: 5px;
+      }
     </style>
   </head>
   <body>
-    <h1>Project 1</h1>
-
-    <div id="app" v-cloak></div>
+    <h1>Number Guessing Game</h1>
+    <div id="app" v-cloak>
+      <div id="display-container">
+        <!-- <button id="btn-play" class="game-start">Play!</button> -->
+        <button 
+        class="game-start" 
+        v-bind:class="{ 'game-active': gameActive }"
+        v-bind:disabled="gameActive"
+        v-on:click="playGame"
+        >
+        {{ playButtonText }}
+      </button>
+        <p id="output-message"></p>
+    </div>
+      <div v-if='gameActive && !gameCompleted' id='buttons-container'>
+        <guess-button 
+          v-for='number in numbers'
+          v-bind:key='number.number'
+          v-bind:number='number.number'
+          v-bind:was-selected='number.wasSelected'
+          v-on:select-number='selectNumber($event)'
+        >
+        </guess-button>
+      </div>
+      <div v-if='gameCompleted'>
+        <p class='output-text'>{{ outputText }}</p>
+        <button v-on:click='restartGame' class="play-again">Play Again!</button>
+      </div>
+      <div v-if='guessHistory.length > 0' id='history' class='box-shadow'>
+        <h3>Game Log</h3>
+        <hr>
+        <div id='log-content'>
+          <ul>
+            <play-history-item
+              v-for='guess in guessHistory'
+              v-bind:key='guess.attemptNumber'
+              v-bind:attempt-number='guess.attemptNumber'
+              v-bind:times-guessed='guess.timesGuessed'
+            >
+            </play-history-item>
+          </ul>
+        </div>
+        <button v-on:click='clearHistory' class='btn-clear-log'>Clear Log</button>
+      <div>
+    </div>
   </body>
 </html>
