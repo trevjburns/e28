@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Word Scramble</title>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="script.js" defer></script>
+
+    <script id='guess-feedback' type='text/x-template'>
+      <div v-if="feedback" class="feedback" v-bind:class="{ pass: correct, fail: !correct }">
+        <div v-if="correct">Correct! Nice job! <button v-on:click="$emit('restart-game')">Play again!</button></div>
+        <div v-else>Not quite... try again!</div>
+      </div>
+    </script>
+
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+      body {
+          margin: 2em;
+      }
+      #scrambledWord {
+          font-weight: bold;
+          font-size: 1.5em;
+      }
+      .pass {
+          background-color: green;
+      }
+      .fail {
+          background-color: red;
+      }
+      .feedback {
+          display: inline-block;
+          padding: 5px;
+          margin: 10px 0;
+          color: white;
+          font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Word Scramble</h1>
+    <div id="app" v-cloak>
+      <template v-if="!gameStarted">
+        <label>Enter your player name: </label>
+        <input v-model.trim="playerName" type="text" />
+        <button v-on:click="startGame">Let's play!</button>
+      </template>
+      <template v-else>
+          <p> 
+          <label>Game on, {{ playerName }}!</label>
+          </p>
+          <p>
+          <label>Your mystery word is: <span id="scrambledWord">{{ scrambledWord }}</span></label><br>
+          </p>
+          <p>
+          <label>Hint: <em>{{ mysteryWord.hint }}</em></label><br>
+          </p>
+          <label>Your guess: </label><input v-model.trim="guessInput" type="text"><button v-on:click="submitGuess()">Submit Guess</button>
+      </template>
+      <br>
+     <guess-feedback 
+       v-bind:feedback='feedback' 
+       v-bind:correct='correct'
+       v-on:restart-game='restartGame($event)'
+       >
+      </guess-feedback>
+    </div>
+  </body>
+</html>
