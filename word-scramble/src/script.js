@@ -1,4 +1,7 @@
-const WordScramble = {
+import { createApp } from 'vue'
+import GuessFeedback from './components/GuessFeedback.vue'
+
+const App = {
     data() {
         return {
             playerName: '',
@@ -67,19 +70,6 @@ const WordScramble = {
     }
 }
 
-const GuessFeedback = {
-    name: 'GuessFeedback',
-    props: {
-        feedback: {
-            type: Boolean
-        },
-        correct: {
-            type: Boolean
-        }
-    },
-    template: '#guess-feedback'
-}
-
-const app = Vue.createApp(WordScramble);
+const app = createApp(App);
 app.component('guess-feedback', GuessFeedback);
 app.mount('#app');
