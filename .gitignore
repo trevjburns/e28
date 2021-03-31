@@ -1,2 +1,5 @@
 .config
 update
+node_modules
+hot
+mix-manifest.json
