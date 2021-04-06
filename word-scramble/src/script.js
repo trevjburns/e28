@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import GuessFeedback from './components/GuessFeedback.vue'
 
+
 const App = {
     data() {
         return {
