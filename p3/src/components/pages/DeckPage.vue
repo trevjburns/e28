@@ -7,18 +7,18 @@
       </div>
       <div class="flashcard-body">
         <h3>{{ currentCard.question }}</h3>
-        <input type="text" id="card-input" v-model="answerInput" />
-        <button id="card-input-button" v-on:click="submitAnswer">Submit</button>
+        <input type="text" id="card-input" v-model="answerInput" data-test="card-input" />
+        <button id="card-input-button" v-on:click="submitAnswer" data-test="card-submit">Submit</button>
         <div
           v-if="showFeedback"
           id="feedback"
           v-bind:class="{ pass: correct, fail: !correct }"
         >
-          <div v-if="correct">
-            Correct! Nice job!
-            <button v-on:click="getNextCard">Next Card</button>
+          <div v-if="correct" >
+            <span data-test="positive-feedback">Correct! Nice job!</span>
+            <button v-on:click="getNextCard" data-test="next-card">Next Card</button>
           </div>
-          <div v-else>Not quite... try again!</div>
+          <div v-else><span data-test="negative-feedback">Not quite... try again!</span></div>
         </div>
         <span v-if="showHint" id="hint"></span>
         
@@ -108,10 +108,12 @@ export default {
       this.currentCard = selectedCard;
     },
     submitAnswer() {
-      if (
-        this.answerInput.toLowerCase() == this.currentCard.answer.toLowerCase()
-      ) {
+      console.log('submitting answer');
+      if (this.answerInput.toLowerCase() == this.currentCard.answer.toLowerCase()) {
         this.correct = true;
+        this.showFeedback = true;
+      } else {
+        this.correct = false;
         this.showFeedback = true;
       }
     },
