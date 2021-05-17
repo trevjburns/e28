@@ -1,8 +1,9 @@
-# Project 2
+# Project 3
 + By: *Trevor Burns* 
-+ Production URL: <http://e28p2.trevjburns.me>  
++ Production URL: <http://e28p3.trevjburns.me>  
 
 ## Outside resources 
-  
+N/A
 
 ## Notes for instructor 
+N/A
